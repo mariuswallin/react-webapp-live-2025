@@ -37,6 +37,7 @@ function App() {
       <TaskList tasks={tasks}>
         <TaskFooter />
       </TaskList>
+      <p>Du har X antall oppgaver</p>
     </div>
   );
 }

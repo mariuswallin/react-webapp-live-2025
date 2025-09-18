@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import React, { useState } from "react"
 import type { Task } from "../types"
 
 export default function TaskForm() {
@@ -18,8 +18,12 @@ export default function TaskForm() {
         // { id: 'ny-id', title: "Ny tittel", description: '', dueDate: "DATO" }
         setTaskItem((prev) =>({...prev, ...value, id}))
     }
+
+    const onCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+    }
     return (
-        <form>
+        <form onSubmit={onCreateTask}>
             <div>
                 <label htmlFor="title">Title:</label>
                 <input 
@@ -49,6 +53,7 @@ export default function TaskForm() {
           onChange={(e) => updateTask({ dueDate: new Date(e.target.value) })}
         />
       </div>
+      <button type="submit">Create task</button>
         </form>
     )
 }

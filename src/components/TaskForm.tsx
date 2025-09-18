@@ -30,6 +30,25 @@ export default function TaskForm() {
                     onChange={e => updateTask({title: e.target.value})}
                 />
             </div>
+            <div>
+        <label htmlFor="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          value={taskItem.description}
+          onChange={(e) => updateTask({ description: e.target.value })}
+        />
+      </div>
+      <div>
+        <label htmlFor="dueDate">Due Date:</label>
+        <input
+          type="date"
+          id="dueDate"
+          name="dueDate"
+          value={taskItem.dueDate.toLocaleString()}
+          onChange={(e) => updateTask({ dueDate: new Date(e.target.value) })}
+        />
+      </div>
         </form>
     )
 }

@@ -2,7 +2,7 @@ import { useState } from "react"
 import type { Task } from "../types"
 import TaskForm from "./TaskForm"
 
-export default function TaskManager({
+export default function TasksManager({
     initialTasks
 }: {
     initialTasks: Task[]

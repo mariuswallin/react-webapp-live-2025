@@ -4,6 +4,7 @@ import TaskCard from './components/TaskCard';
 import TaskFooter from './components/TaskFooter';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
+import TasksManager from './components/TaskManager';
 import type { Task } from './types';
 
 const task = {
@@ -33,7 +34,8 @@ function App() {
     <div>
       <h1>Hey</h1>
       {/* <TaskCard task={task} /> */}
-      <TaskForm onTaskCreate={(task) => console.log(task)} />
+      <TasksManager initialTasks={tasks} />
+      {/* <TaskForm onTaskCreate={(task) => console.log(task)} /> */}
       <TaskList tasks={tasks}>
         <TaskFooter />
       </TaskList>

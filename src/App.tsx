@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 
 import TaskCard from './components/TaskCard';
@@ -14,7 +15,7 @@ const task = {
   dueDate: new Date(),
 };
 
-const tasks: Task[] = [
+const initialTasks: Task[] = [
   {
     id: '1234',
     title: 'My Title Works',
@@ -30,16 +31,21 @@ const tasks: Task[] = [
 ];
 
 function App() {
+  const [tasks, setTasks] = useState<Task[]>(initialTasks)
+
+  const onAddTask = (task: Task) => {
+    setTasks(prev => ([...prev, task]))
+  }
   return (
     <div>
       <h1>Hey</h1>
       {/* <TaskCard task={task} /> */}
-      <TasksManager initialTasks={tasks} />
+      <TasksManager tasks={tasks} onAddTask={onAddTask} />
       {/* <TaskForm onTaskCreate={(task) => console.log(task)} /> */}
       <TaskList tasks={tasks}>
         <TaskFooter />
       </TaskList>
-      <p>Du har X antall oppgaver</p>
+      <p>Du har {tasks.length} antall oppgaver</p>
     </div>
   );
 }

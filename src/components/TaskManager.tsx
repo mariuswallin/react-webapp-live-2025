@@ -3,14 +3,16 @@ import type { Task } from "../types"
 import TaskForm from "./TaskForm"
 
 export default function TasksManager({
-    initialTasks
+    onAddTask,
+    tasks
 }: {
-    initialTasks: Task[]
+    onAddTask: (task: Task) => void,
+    tasks: Task[]
 }) {
-    const [tasks, setTasks] = useState<Task[]>(initialTasks)
+    
 
     const onTaskCreate = (task: Task) => {
-        setTasks(prev => ([...prev, task]))
+        onAddTask(task)
     }
 
     return <section>

@@ -1,6 +1,7 @@
 import './App.css';
 
 import TaskCard from './components/TaskCard';
+import TaskFooter from './components/TaskFooter';
 import TaskList from './components/TaskList';
 import type { Task } from './types';
 
@@ -31,7 +32,9 @@ function App() {
     <div>
       <h1>Hey</h1>
       {/* <TaskCard task={task} /> */}
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks}>
+        <TaskFooter />
+      </TaskList>
     </div>
   );
 }

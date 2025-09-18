@@ -3,7 +3,13 @@
 import React, { useState } from "react"
 import type { Task } from "../types"
 
-export default function TaskForm() {
+type TaskFormProps = {
+    onTaskCreate: (task:Task) => void
+}
+
+export default function TaskForm(props: TaskFormProps) {
+    const {onTaskCreate} = props
+
     const [taskItem, setTaskItem] = useState<Task>({
         id: "",
         title: "",
@@ -21,6 +27,22 @@ export default function TaskForm() {
 
     const onCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        const isInvalidData = !taskItem.title || !taskItem.description
+        const isValidData = taskItem.title && taskItem.description
+
+        if(isInvalidData) {
+            alert("Alle felter må fylles inn")
+            return
+
+        }
+
+        if(isValidData) {
+            // Do something with data
+            onTaskCreate(taskItem)
+            return
+        }
+
+
     }
     return (
         <form onSubmit={onCreateTask}>

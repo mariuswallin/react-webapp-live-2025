@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import type { Task } from "../types"
+import { useTask } from "../hooks/useTask"
 
 type TaskFormProps = {
     onTaskCreate: (task:Task) => void
@@ -10,35 +11,37 @@ type TaskFormProps = {
 export default function TaskForm(props: TaskFormProps) {
     const {onTaskCreate} = props
 
-    const [taskItem, setTaskItem] = useState<Task>({
-        id: "",
-        title: "",
-        description: "",
-        dueDate: new Date()
-    })
+    const {task, actions} = useTask({title: "Test"})
 
-    const updateTask = (value: Partial<Task>) => {
-        // value = {title: "Ny tittel"}
-        const id = crypto.randomUUID()
-        // { id: '', title: '', description: '', dueDate: "", title: "Ny tittel", id: ""}
-        // { id: 'ny-id', title: "Ny tittel", description: '', dueDate: "DATO" }
-        setTaskItem((prev) =>({...prev, ...value, id}))
-    }
+    // const [taskItem, setTaskItem] = useState<Task>({
+    //     id: "",
+    //     title: "",
+    //     description: "",
+    //     dueDate: new Date()
+    // })
+
+    // const updateTask = (value: Partial<Task>) => {
+    //     // value = {title: "Ny tittel"}
+    //     const id = crypto.randomUUID()
+    //     // { id: '', title: '', description: '', dueDate: "", title: "Ny tittel", id: ""}
+    //     // { id: 'ny-id', title: "Ny tittel", description: '', dueDate: "DATO" }
+    //     setTaskItem((prev) =>({...prev, ...value, id}))
+    // }
 
     const onCreateTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const isInvalidData = !taskItem.title || !taskItem.description
-        const isValidData = taskItem.title && taskItem.description
+        const isInvalidData = !task.title || !task.description
+        const isValidData = task.title && task.description
 
-        if(isInvalidData) {
+        if(!actions.validateTask(task)) {
             alert("Alle felter må fylles inn")
             return
 
         }
 
-        if(isValidData) {
+        if(actions.validateTask(task)) {
             // Do something with data
-            onTaskCreate(taskItem)
+            onTaskCreate(task)
             return
         }
 
@@ -52,8 +55,8 @@ export default function TaskForm(props: TaskFormProps) {
                     id="title"
                     type="text"
                     name="title"
-                    value={taskItem.title}
-                    onChange={e => updateTask({title: e.target.value})}
+                    value={task.title}
+                    onChange={e => actions.updateTask({title: e.target.value})}
                 />
             </div>
             <div>
@@ -61,8 +64,8 @@ export default function TaskForm(props: TaskFormProps) {
         <textarea
           id="description"
           name="description"
-          value={taskItem.description}
-          onChange={(e) => updateTask({ description: e.target.value })}
+          value={task.description}
+          onChange={(e) => actions.updateTask({ description: e.target.value })}
         />
       </div>
       <div>
@@ -71,8 +74,8 @@ export default function TaskForm(props: TaskFormProps) {
           type="date"
           id="dueDate"
           name="dueDate"
-          value={taskItem.dueDate.toLocaleString()}
-          onChange={(e) => updateTask({ dueDate: new Date(e.target.value) })}
+          value={task.dueDate.toLocaleString()}
+          onChange={(e) => actions.updateTask({ dueDate: new Date(e.target.value) })}
         />
       </div>
       <button type="submit">Create task</button>
